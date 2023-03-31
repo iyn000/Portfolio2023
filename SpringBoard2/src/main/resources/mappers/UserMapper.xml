@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="edu.study.mepper.userMapper">
+	<insert id="insert" parameterType="userVO">
+		INSERT INTO user(
+			uid
+			,upw
+			,uname
+			,ugen	
+		)VALUES(
+			#{uid}
+			,#{upw}
+			,#{uname}
+			,#{ugen}
+		)
+
+	</insert>
+	
+	<!-- re > 행 param > 객체 타입 -->
+	<select id="selectLogin" resultType="userVO" parameterType="userVO">
+	
+		SELECT uno
+			   ,uid
+			   ,uname
+			FROM user
+			WHERE uid =#{uid}
+			AND   upw =#{upw}
+	
+	</select>
+	
+	<select id="selectById" resultType="int" parameterType="String">
+		SELECT COUNT(*)
+			FROM user
+			WHERE uid = #{value} <!-- string은 객체타입(참조) , 게터로 파라미터를 호출하지 못한다. value 키워드 사용 -->
+			
+			
+	</select>
+	
+</mapper>

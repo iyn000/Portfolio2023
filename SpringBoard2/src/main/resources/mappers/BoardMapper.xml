@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="edu.study.mapper.boardMapper">
+	
+	<select id="selectAll" resultType="boardVO" parameterType="searchVO">
+		select *
+			from board b, user u
+			where b.uno = u.uno <!-- 의미없는 where절/구문오류방지 -->
+			<if test="searchType != null and searchType eq 'title'">
+				and btitle like concat('%',#{searchValue},'%')
+			</if>
+			<if test="searchType != null and searchType eq 'writer'">
+				and uid like concat('%',#{searchValue},'%')
+			</if>
+			<if test="searchKind != null">
+				and bkind = #{searchKind}
+			</if>
+
+	</select>
+	
+	<delete id="delete" parameterType="int">
+		
+		DELETE 
+		FROM board
+		WHERE bno = #{bno}
+		
+	</delete>
+	
+		<delete id="deleteReply" parameterType="int">
+		
+		DELETE 
+		FROM reply
+		WHERE bno = #{bno}
+		
+	</delete>
+	
+	
+	
+	<!-- parameterType = 물음표 채우는 용도/#{} -->
+	<select id="selectByBno" resultType="boardVO" parameterType="int">
+		select *
+			from board
+			where bno = #{bno}
+	</select>
+	
+	
+	<update id="update" parameterType="boardVO">
+		UPDATE board
+			SET btitle = #{btitle}
+				,bkind = #{bkind}
+				,bnote = #{bnote}
+			WHERE bno  = #{bno}
+	</update>
+	
+	
+	<insert id="insert" parameterType="boardVO"> <!-- parametertype = vo를 받을 타입 -->
+		
+		<!-- 다른 태그를 인식 못하도록 경계를 명시하는 태그 CDATA -->
+		<![CDATA[
+		INSERT INTO board(
+			btitle
+			,bkind
+			,uno
+			,bnote
+		
+		)VALUES(
+			#{btitle}
+			,#{bkind}
+			,#{uno}
+			,#{bnote}
+		)
+		]]>
+		
+		<!-- 키값 조회 태그, 혼자서는 사용이 불가능하다 -->
+		<selectKey resultType="int" order="AFTER" keyProperty="bno">
+			SELECT MAX(bno) FROM board
+		</selectKey>
+		
+	</insert>
+	 
+</mapper>

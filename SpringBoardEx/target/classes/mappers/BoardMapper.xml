@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="my.spring.mapper.boardMapper">
+ 
+ 	<select id="selectByBno" resultType="boardVO" parameterType="int">
+ 		select *
+ 			from board
+ 			where bno = #{bno}
+ 	</select>
+ 
+ 	
+ 	
+ 	<!-- 검색기능 --> 
+  	<select id="selectAll" resultType="boardVO" parameterType="SearchVO">
+  		select *
+  			from board b, user u
+  			where b.uno = u.uno
+  			<if test = "searchType != null and searchType eq 'title_note'">
+  				and btitle like concat('%',#{searchValue},'%')
+  			</if>
+  			<if test = "searchType != null and searchType eq 'writer'">
+  				and uid like concat('%',#{searchValue},'%')
+  			</if>
+ 	</select>
+ 	
+ 	<!-- 게시물 총개수 -->
+ 	<select id="countBoard" resultType="int" parameterType="int">
+ 		select count(bno) from boarddb.board;
+ 	</select>
+
+	 <select id="getBoardList" resultType="boardVO" parameterType="BoardVO">
+        SELECT bno, btitle, bnote, bwdate
+        FROM boarddb.board
+        ORDER BY bno DESC
+        LIMIT #{page}, #{pageSize}
+    </select>
+ 	
+
+ 	
+  
+  
+  </mapper>

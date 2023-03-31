@@ -1,0 +1,54 @@
+li {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  color: #000;
+}
+
+header {
+  margin-top: 50px;
+  margin-bottom: 100px;
+}
+header #header_1 li {
+  float: left;
+}
+header #header_2 ul {
+  float: right;
+}
+header #header_2 li {
+  float: left;
+}
+header hr {
+  clear: both;
+}
+
+body #Page_Name {
+  margin-bottom: 50px;
+}
+body #Page_Name h3 {
+  font-size: 20px;
+  font-weight: bold;
+}
+body #Notice_list_page #Notice_search {
+  float: right;
+  width: 500px;
+}
+body #Notice_list_page #Notice_search label {
+  font-size: 16px;
+  margin-right: 15px;
+  padding-top: 4px;
+}
+body #Notice_list_page p {
+  margin-top: 30px;
+  margin-bottom: 10px;
+  color: #cccccc;
+}
+body #Notice_list_page button {
+  float: right;
+  width: 80px;
+}
+body a {
+  color: #000;
+}
